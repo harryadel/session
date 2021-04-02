@@ -1,0 +1,11 @@
+{
+  "name": "session",
+  "version": "1.0.0",
+  "description": "[Source code of released version](https://github.com/meteor/meteor/tree/master/packages/session) | [Source code of development version](https://github.com/meteor/meteor/tree/devel/packages/session) ***",
+  "main": "session.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
