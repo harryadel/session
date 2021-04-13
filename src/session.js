@@ -1,4 +1,4 @@
-import { ReactiveDict } from 'meteor/reactive-dict';
+import { ReactiveDict } from 'reactive-dict';
 
 export const Session = new ReactiveDict('session');
 
