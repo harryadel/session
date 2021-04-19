@@ -24,7 +24,7 @@
     "rimraf": "^3.0.2"
   },
   "dependencies": {
-    "reactive-dict": "^1.0.1",
+    "reactive-dict": "^1.0.2",
     "standalone-tracker": "^1.0.0"
   }
 }
