@@ -36,67 +36,67 @@ test('session - get/set/equals types', () => {
   Session.set('n', null);
   expect(Session.get('n')).toEqual(null);
   expect(Session.equals('n', undefined)).toBeFalsy();
-  test.isTrue(Session.equals('n', null));
-  test.isFalse(Session.equals('n', 0));
-  test.isFalse(Session.equals('n', ''));
-  test.isFalse(Session.equals('n', 'undefined'));
-  test.isFalse(Session.equals('n', 'null'));
+  expect(Session.equals('n', null)).toBeTruthy();
+  expect(Session.equals('n', 0)).toBeFlasy();
+  expect(Session.equals('n', '')).toBeFalsy();
+  expect(Session.equals('n', 'undefined')).toBeFlasy();
+  expect(Session.equals('n', 'null')).toBeFlasy();
 
   Session.set('t', true);
-  test.equal(Session.get('t'), true);
-  test.isTrue(Session.equals('t', true));
-  test.isFalse(Session.equals('t', false));
-  test.isFalse(Session.equals('t', 1));
-  test.isFalse(Session.equals('t', 'true'));
+  expect(Session.get('t')).toEqual(true);
+  expect(Session.equals('t', true)).toBeTruthy();
+  expect(Session.equals('t', false)).toBeFalsy();
+  expect(Session.equals('t', 1)).toBeFalsy();
+  expect(Session.equals('t', 'true')).toBeFalsy();
 
   Session.set('f', false);
-  test.equal(Session.get('f'), false);
-  test.isFalse(Session.equals('f', true));
-  test.isTrue(Session.equals('f', false));
-  test.isFalse(Session.equals('f', 1));
-  test.isFalse(Session.equals('f', 'false'));
+  expect(Session.get('f')).toEqual(false);
+  expect(Session.equals('f', true)).toBeFlasy();
+  expect(Session.equals('f', false)).toBeTruthy();
+  expect(Session.equals('f', 1)).toBeFlasy();
+  expect(Session.equals('f', 'false')).toBeFlasy();
 
   Session.set('num', 0);
-  test.equal(Session.get('num'), 0);
-  test.isTrue(Session.equals('num', 0));
-  test.isFalse(Session.equals('num', false));
-  test.isFalse(Session.equals('num', '0'));
-  test.isFalse(Session.equals('num', 1));
+  expect.toEqual(Session.get('num'), 0);
+  expect.toBeTruthy(Session.equals('num', 0));
+  expect.toBeFlasy(Session.equals('num', false));
+  expect.toBeFlasy(Session.equals('num', '0'));
+  expect.toBeFlasy(Session.equals('num', 1));
 
   Session.set('str', 'true');
-  test.equal(Session.get('str'), 'true');
-  test.isTrue(Session.equals('str', 'true'));
-  test.isFalse(Session.equals('str', true));
+  expect(Session.get('str')).toEqual();
+  expect(Session.equals('str', 'true')).toBeTruthy();
+  expect(Session.equals('str', true)).toBeFlasy();
 
   Session.set('arr', [1, 2, { a: 1, b: [5, 6] }]);
-  test.equal(Session.get('arr'), [1, 2, { b: [5, 6], a: 1 }]);
-  test.isFalse(Session.equals('arr', 1));
-  test.isFalse(Session.equals('arr', '[1,2,{"a":1,"b":[5,6]}]'));
-  test.throws(() => {
+  expect(Session.get('arr')).toEqual([1, 2, { b: [5, 6], a: 1 }]);
+  expect(Session.equals('arr', 1)).toBeFlasy();
+  expect(Session.equals('arr', '[1,2,{"a":1,"b":[5,6]}]')).toBeFlasy();
+  expect.throws(() => {
     Session.equals('arr', [1, 2, { a: 1, b: [5, 6] }]);
   });
 
   Session.set('obj', { a: 1, b: [5, 6] });
-  test.equal(Session.get('obj'), { b: [5, 6], a: 1 });
-  test.isFalse(Session.equals('obj', 1));
-  test.isFalse(Session.equals('obj', '{"a":1,"b":[5,6]}'));
-  test.throws(() => { Session.equals('obj', { a: 1, b: [5, 6] }); });
+  expect(Session.get('obj')).toEqual({ b: [5, 6], a: 1 });
+  expect(Session.equals('obj', 1)).isFalse();
+  expect(Session.equals('obj', '{"a":1,"b":[5,6]}')).isFalse();
+  expect.throws(() => { Session.equals('obj', { a: 1, b: [5, 6] }); });
 
   Session.set('date', new Date(1234));
-  test.equal(Session.get('date'), new Date(1234));
-  test.isFalse(Session.equals('date', new Date(3455)));
-  test.isTrue(Session.equals('date', new Date(1234)));
+  expect.equal(Session.get('date'), new Date(1234));
+  expect.isFalse(Session.equals('date', new Date(3455)));
+  expect.isTrue(Session.equals('date', new Date(1234)));
 
   Session.set('oid', new Mongo.ObjectID('ffffffffffffffffffffffff'));
-  test.equal(Session.get('oid'), new Mongo.ObjectID('ffffffffffffffffffffffff'));
-  test.isFalse(Session.equals('oid', new Mongo.ObjectID('fffffffffffffffffffffffa')));
-  test.isTrue(Session.equals('oid', new Mongo.ObjectID('ffffffffffffffffffffffff')));
+  expect(Session.get('oid')).toEqual(new Mongo.ObjectID('ffffffffffffffffffffffff'));
+  expect(Session.equals('oid', new Mongo.ObjectID('fffffffffffffffffffffffa'))).isFalse();
+  expect(Session.equals('oid', new Mongo.ObjectID('ffffffffffffffffffffffff'))).toBeTruthy();
 });
 
 test('session - objects are cloned', () => {
   Session.set('frozen-array', [1, 2, 3]);
   Session.get('frozen-array')[1] = 42;
-  test.equal(Session.get('frozen-array'), [1, 2, 3]);
+  expect.equal(Session.get('frozen-array'), [1, 2, 3]);
 
   Session.set('frozen-object', { a: 1, b: 2 });
   Session.get('frozen-object').a = 43;
@@ -145,13 +145,13 @@ test('session - context invalidation for equals', () => {
   // Setting to the same value doesn't re-run.
   expect(xEqualsExecutions).toEqual(2);
   Session.set('x', '5');
-  test.equal(xEqualsExecutions, 2);
+  expect(xEqualsExecutions).toEqual(2);
   Tracker.flush();
-  test.equal(xEqualsExecutions, 3);
+  expect(xEqualsExecutions).toEqual(3);
   Session.set('x', 5);
-  test.equal(xEqualsExecutions, 3);
+  expect(xEqualsExecutions).toEqual(3);
   Tracker.flush();
-  test.equal(xEqualsExecutions, 4);
+  expect(xEqualsExecutions).toEqual(4);
 });
 
 test(
@@ -166,7 +166,7 @@ test(
     expect(yEqualsExecutions).toEqual(1);
     Session.set('y', undefined);
     Tracker.flush();
-    expect(yEqualsExecutions.toEqual(, 1);
+    expect(yEqualsExecutions).toEqual(1);
     Session.set('y', 5);
     expect(yEqualsExecutions).toEqual(1);
     Tracker.flush();
@@ -176,12 +176,12 @@ test(
     expect(yEqualsExecutions).toEqual(2);
     Session.set('y', 'undefined');
     Tracker.flush();
-    expect(yEqualsExecution).toEqual(2);
+    expect(yEqualsExecutions).toEqual(2);
     Session.set('y', undefined);
     expect(yEqualsExecutions).toEqual(2);
     Tracker.flush();
     expect(yEqualsExecutions).toEqual(3);
-  }
+  },
 );
 
 test('session - parse an object of key/value pairs', () => {
